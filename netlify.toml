@@ -3,6 +3,10 @@
   publish = "dist"
   functions = "netlify/functions"
 
+
+[build.environment]
+  # Any default environment variables here
+
 [dev]
   command = "npm run dev"
   port = 5173
