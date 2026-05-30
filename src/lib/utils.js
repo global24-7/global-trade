@@ -2,13 +2,16 @@
 // GLOBAL TRADE — UTILITY FUNCTIONS
 // =============================================
 
-export const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'kingdevilgh.com'
 export const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '233500643544'
 export const TELECEL_1 = import.meta.env.VITE_TELECEL_1 || '0505477790'
 export const TELECEL_2 = import.meta.env.VITE_TELECEL_2 || '0500643544'
 export const MIN_DEPOSIT = Number(import.meta.env.VITE_MIN_DEPOSIT) || 50
 export const ADMIN_FEE_PCT = Number(import.meta.env.VITE_ADMIN_FEE_PCT) || 0.10
 export const PAYSTACK_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || ''
+
+// Admin password — read from VITE_ADMIN_PASSWORD env var (set in Netlify)
+// Do NOT hardcode this value here
+export const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || ''
 
 /** Format a number as GHS currency */
 export function fmtMoney(n) {
@@ -79,13 +82,13 @@ export function waLink(message) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
 
-/** Open Paystack checkout popup. Returns a Promise that resolves on success or rejects on close. */
+/** Open Paystack checkout popup */
 export function openPaystack({ email, amount, ref, userCode, onSuccess, onClose }) {
   return new Promise((resolve, reject) => {
     const handler = window.PaystackPop.setup({
       key: PAYSTACK_KEY,
       email,
-      amount: Math.round(amount * 100), // Paystack uses pesewas
+      amount: Math.round(amount * 100),
       currency: 'GHS',
       ref,
       metadata: {
